@@ -1,7 +1,7 @@
-# ─────────────────────────────────────────────────────────────────
+# =================================================================
 # S3 → Redshift Copy Job Configuration
 # To add a new brand/dataset, just add an entry under the right source.
-# ─────────────────────────────────────────────────────────────────
+# =================================================================
 
 settings:
   bucket: hnb-dns-rdl-staging
@@ -12,7 +12,7 @@ settings:
 
 sources:
 
-  # ── HNB Commerce (Custom Platform) ──────────────────────────
+  # == HNB Commerce (Custom Platform) ==========================
   hnb_commerce:
     schema: rdl_hnb_commerce
     brands:
@@ -21,7 +21,7 @@ sources:
       hnb_man:
         datasets: [customers, products, orders, order_items]
 
-  # ── Salesforce Commerce Cloud (PLT) ────────────────────────────
+  # == Salesforce Commerce Cloud (PLT) ============================
   salesforce_commerce:
     schema: rdl_salesforce_commerce
     prefix: plt
@@ -29,14 +29,14 @@ sources:
       prettylittlething:
         datasets: [customers, products, orders, order_items]
 
-  # ── Shopify (NastyGal) ─────────────────────────────────────────
+  # == Shopify (NastyGal) =========================================
   shopify:
     schema: rdl_shopify
     brands:
       nastygal:
         datasets: [customers, products, orders, order_items]
 
-  # ── Magento (Karen Millen & Coast) ─────────────────────────────
+  # == Magento (Karen Millen & Coast) =============================
   magento:
     schema: rdl_magento
     brands:
@@ -45,14 +45,14 @@ sources:
       coast:
         datasets: [customers, products, orders, order_items]
 
-  # ── Oracle Commerce (Debenhams) ────────────────────────────────
+  # == Oracle Commerce (Debenhams) ================================
   oracle_commerce:
     schema: rdl_oracle_commerce
     brands:
       debenhams:
         datasets: [customers, products, orders, order_items]
 
-  # ── Marketing Channels ─────────────────────────────────────────
+  # == Marketing Channels =========================================
   marketing:
     schema: rdl_marketing
     brands:

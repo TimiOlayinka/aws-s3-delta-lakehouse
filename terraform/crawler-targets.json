@@ -1,0 +1,6 @@
+{
+  "S3Targets": [
+    {"Path": "s3://bellosdata-bronze-raw/rdl/weather"},
+    {"Path": "s3://bellosdata-bronze-raw/rdl/wind"}
+  ]
+}

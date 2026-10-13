@@ -33,12 +33,12 @@ cd /home/ec2-user
 if [ -d "platform" ]; then
   cd platform && git pull origin main && cd ..
 else
-  git clone https://github.com/TimiOlayinka/boohoo-data-pipeline.git platform
+  git clone https://github.com/TimiOlayinka/bellosdata-lakehouse.git platform
 fi
 
 # ── Create directory structure ──
-echo "[5/5] Setting up directories..."
-mkdir -p /home/ec2-user/platform/unity-catalog/etc/conf
+echo "[5/5] Setting up Airflow directories..."
+mkdir -p /home/ec2-user/platform/airflow/logs /home/ec2-user/platform/airflow/plugins
 
 # ── Create .env template (replace with real keys) ──
 if [ ! -f /home/ec2-user/platform/.env ]; then
@@ -62,12 +62,10 @@ echo "  Next steps:"
 echo "  1. Edit .env with IAM access keys:"
 echo "     nano /home/ec2-user/platform/.env"
 echo ""
-echo "  2. Start services:"
+echo "  2. Start Airflow orchestration cluster:"
 echo "     cd /home/ec2-user/platform"
-echo "     docker compose -f unity-catalog/compose.cloud.yaml up -d"
 echo "     docker compose -f airflow/docker-compose.cloud.yaml up -d"
 echo ""
-echo "  3. Register tables:"
-echo "     pip3 install requests"
-echo "     python3 unity-catalog/scripts/register_tables.py"
+echo "  3. Trigger Glue Data Catalog sync DAG in Airflow UI (:8081):"
+echo "     DAG: glue_catalog_sync"
 echo ""

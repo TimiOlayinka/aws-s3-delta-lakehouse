@@ -26,7 +26,7 @@ locals {
 }
 
 # ═══════════════════════════════════════════════════════════════
-# Lightsail — Data Platform (Airflow + Unity Catalog)
+# Lightsail — Data Platform (Apache Airflow 3.2.1)
 # Always-on cloud instance running Docker Compose
 # ═══════════════════════════════════════════════════════════════
 
@@ -156,7 +156,7 @@ resource "aws_cloudwatch_log_group" "ecs_log_group" {
 
 # ═══════════════════════════════════════════════════════════════
 # AWS Glue Data Catalog — Lakehouse Metadata
-# Replaces Unity Catalog OSS for table governance
+# Managed Hive-compatible metadata catalog for S3 Delta Lake tables
 # ═══════════════════════════════════════════════════════════════
 
 resource "aws_glue_catalog_database" "bellosdata" {
@@ -166,8 +166,7 @@ resource "aws_glue_catalog_database" "bellosdata" {
 
 # ═══════════════════════════════════════════════════════════════
 # Redshift Serverless — Query Engine (compute-only, S3 native)
-# Replaces DuckDB for production analytics
-# Queries S3 Delta Lake directly — no Spectrum fees
+# Queries S3 Delta Lake directly via AWS Glue Data Catalog
 # ═══════════════════════════════════════════════════════════════
 
 variable "redshift_admin_password" {

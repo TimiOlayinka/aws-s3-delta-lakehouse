@@ -1,8 +1,8 @@
-# ─────────────────────────────────────────────────────────────────
+# =================================================================
 # Redshift → S3 Parquet Export Configuration
 # Each model maps to an UNLOAD SQL statement.
 # The DAG reads this file and submits each SQL to Redshift Data API.
-# ─────────────────────────────────────────────────────────────────
+# =================================================================
 
 settings:
   workgroup: bellosdata
@@ -13,7 +13,7 @@ settings:
 
 exports:
 
-  # ── RDL Layer ──────────────────────────────────────────────────
+  # == RDL Layer ==================================================
   rdl:
     models:
       - schema: rdl_zendesk
@@ -36,7 +36,7 @@ exports:
         tables: [rdl_customer_otif, rdl_customer_otif_cc, rdl_postship_defect]
         filter: ""
 
-  # ── ODL Layer ──────────────────────────────────────────────────
+  # == ODL Layer ==================================================
   odl:
     models:
       - schema: odl
@@ -57,7 +57,7 @@ exports:
           - fact_delivery_item
           - fact_basket_items
 
-  # ── ADL Layer ──────────────────────────────────────────────────
+  # == ADL Layer ==================================================
   adl:
     models:
       - schema: bi

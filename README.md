@@ -109,6 +109,7 @@ bellosdata-lakehouse/
 |   |   +-- odl_dim_builder.py             # YAML-driven dimension builder
 |   |   +-- odl_fact_builder.py            # YAML-driven fact table builder
 |   |   +-- odl_mapping_builder.py         # YAML-driven mapping table builder
+|   |   +-- glue_catalog_sync.py           # AWS Glue Data Catalog Delta table sync
 |   |   |
 |   |   +-- companies_house_upload_dag.py  # Companies House S3 upload
 |   |   +-- drive_sync_dag.py              # Google Drive sync
@@ -123,23 +124,19 @@ bellosdata-lakehouse/
 |   |   +-- copy_jobs.yml                  # S3 copy job definitions
 |   |   +-- export_jobs.yml                # Data export configs
 |   |
-|   +-- plugins/                           # Airflow custom plugins
 |   +-- docker-compose.yaml                # Full Airflow cluster (CeleryExecutor)
 |   +-- docker-compose.cloud.yaml          # Cloud-optimised compose (LocalExecutor)
 |
 +-- terraform/
-|   +-- main.tf                            # Lightsail + ECR + ECS + Lambda API + API Gateway
-|
-+-- unity-catalog/
-|   +-- compose.yaml                       # Unity Catalog local compose
-|   +-- compose.cloud.yaml                 # Unity Catalog cloud compose
-|   +-- etc/conf/                          # Unity Catalog server config
+|   +-- main.tf                            # Lightsail + Glue + Redshift Serverless + ECR/ECS + Lambda API
+|   +-- crawler-targets.json               # S3 Delta Lake Glue Crawler targets
 |
 +-- lambda/
 |   +-- ledger_api.py                      # Serverless cloud API (always-on Lambda)
 |
 +-- .github/
 |   +-- workflows/
+|       +-- lakehouse_ci.yml               # Validates YAML registries, Python DAGs & Terraform
 |       +-- pr_title_checker.yml           # Enforces DATA-X branch naming
 |
 +-- deploy-cloud.sh                        # Cloud deployment script (SCP + SSH)

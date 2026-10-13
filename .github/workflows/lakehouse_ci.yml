@@ -1,0 +1,79 @@
+name: BellosData Lakehouse CI (YAML Registries, Airflow DAGs & Terraform)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-yaml-registries-and-dags:
+    name: Validate YAML Dimensional Registries & Lint Airflow DAGs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install PyYAML & Ruff Linter
+        run: |
+          pip install --upgrade pip
+          pip install pyyaml ruff
+
+      - name: Validate Metadata-Driven YAML Registries (dimensions, facts, mappings, copy/export jobs)
+        run: |
+          python3 - << 'EOF'
+          import pathlib, sys, yaml
+
+          config_dir = pathlib.Path("airflow/config")
+          required_files = [
+              "dimensions.yml",
+              "facts.yml",
+              "mappings.yml",
+              "copy_jobs.yml",
+              "export_jobs.yml",
+          ]
+
+          for fname in required_files:
+              fpath = config_dir / fname
+              if not fpath.exists() or fpath.stat().st_size == 0:
+                  print(f"ERROR: Missing or empty YAML registry: {fpath}")
+                  sys.exit(1)
+              data = yaml.safe_load(fpath.read_text(encoding="utf-8"))
+              if not data:
+                  print(f"ERROR: Failed to parse non-empty YAML from {fpath}")
+                  sys.exit(1)
+              print(f"Validated {fpath}: top-level keys = {list(data.keys()) if isinstance(data, dict) else type(data).__name__}")
+
+          dims = yaml.safe_load((config_dir / "dimensions.yml").read_text(encoding="utf-8")).get("dimensions", [])
+          facts = yaml.safe_load((config_dir / "facts.yml").read_text(encoding="utf-8")).get("facts", [])
+          maps = yaml.safe_load((config_dir / "mappings.yml").read_text(encoding="utf-8")).get("mappings", [])
+          assert len(dims) >= 7, f"Expected >= 7 dimensions, found {len(dims)}"
+          assert len(facts) >= 4, f"Expected >= 4 facts, found {len(facts)}"
+          assert len(maps) >= 6, f"Expected >= 6 mappings, found {len(maps)}"
+          print(f"Metadata Registry Summary: {len(dims)} dimensions, {len(facts)} facts, {len(maps)} mappings verified.")
+          EOF
+
+      - name: Syntax-Check & Lint Python Airflow DAGs and Lambda API
+        run: |
+          python3 -m py_compile airflow/dags/*.py lambda/ledger_api.py
+          ruff check airflow/dags/ lambda/ --select E9,F63,F7,F82
+
+  validate-terraform:
+    name: Terraform Format & Syntax Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Format Check (terraform fmt -check)
+        working-directory: ./terraform
+        run: terraform fmt -check -diff
