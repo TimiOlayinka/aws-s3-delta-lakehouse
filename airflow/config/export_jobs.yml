@@ -6,9 +6,9 @@
 
 settings:
   workgroup: bellosdata
-  database: hnb_dwh
+  database: bellosdata_dwh
   iam_role: ${REDSHIFT_IAM_ROLE}
-  s3_bucket: hnb-data-quality-staging
+  s3_bucket: bellosdata-silver-curated
   region: eu-west-2
 
 exports:
@@ -32,7 +32,7 @@ exports:
         tables: [rdl_parcel_events, rdl_delivery_order, rdl_delivery_item, rdl_digital_refunds]
         filter: ""
 
-      - schema: rdl_hnb_commerce
+      - schema: rdl_omnia_commerce
         tables: [rdl_customer_otif, rdl_customer_otif_cc, rdl_postship_defect]
         filter: ""
 

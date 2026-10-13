@@ -1,5 +1,5 @@
 <p align="center">
-  <h1 align="center">BellosData Lakehouse - S3 Delta Lake Platform</h1>
+  <h1 align="center">AWS S3 Delta Lakehouse Platform (Airflow, Glue & Redshift Serverless)</h1>
   <p align="center">
     <strong>AWS-native data lakehouse — public APIs ingested by Airflow, stored as Delta Lake on S3, modelled via YAML-driven dimensional builders, catalogued by AWS Glue, and queried with Redshift Serverless.</strong>
   </p>
@@ -90,7 +90,7 @@ flowchart LR
 ## Project Structure
 
 ```
-bellosdata-lakehouse/
+aws-s3-delta-lakehouse/
 |
 +-- airflow/
 |   +-- dags/                              # 18 orchestration DAGs
@@ -360,8 +360,8 @@ flowchart TB
 
 ```bash
 # Clone
-git clone https://github.com/TimiOlayinka/bellosdata-lakehouse.git
-cd bellosdata-lakehouse
+git clone https://github.com/TimiOlayinka/aws-s3-delta-lakehouse.git
+cd aws-s3-delta-lakehouse
 
 # Create .env (AWS credentials for S3 access)
 cat > airflow/.env <<EOF

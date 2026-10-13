@@ -33,7 +33,7 @@ cd /home/ec2-user
 if [ -d "platform" ]; then
   cd platform && git pull origin main && cd ..
 else
-  git clone https://github.com/TimiOlayinka/bellosdata-lakehouse.git platform
+  git clone https://github.com/TimiOlayinka/aws-s3-delta-lakehouse.git platform
 fi
 
 # ── Create directory structure ──

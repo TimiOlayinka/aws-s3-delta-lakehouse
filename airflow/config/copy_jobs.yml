@@ -4,69 +4,69 @@
 # =================================================================
 
 settings:
-  bucket: hnb-dns-rdl-staging
+  bucket: bellosdata-bronze-raw
   iam_role: ${REDSHIFT_IAM_ROLE}
   workgroup: bellosdata
-  database: hnb_dwh
+  database: bellosdata_dwh
   region: eu-west-2
 
 sources:
 
-  # == HNB Commerce (Custom Platform) ==========================
-  hnb_commerce:
-    schema: rdl_hnb_commerce
+  # == Omnia Commerce (Custom Platform) ==========================
+  omnia_commerce:
+    schema: rdl_omnia_commerce
     brands:
-      hnb:
+      velvet_lane:
         datasets: [customers, products, orders, order_items]
-      hnb_man:
+      velvet_mens:
         datasets: [customers, products, orders, order_items]
 
-  # == Salesforce Commerce Cloud (PLT) ============================
+  # == Salesforce Commerce Cloud (TrendPulse) ============================
   salesforce_commerce:
     schema: rdl_salesforce_commerce
-    prefix: plt
+    prefix: trend_pulse
     brands:
-      prettylittlething:
+      trend_pulse:
         datasets: [customers, products, orders, order_items]
 
-  # == Shopify (NastyGal) =========================================
+  # == Shopify (RebelChic) =========================================
   shopify:
     schema: rdl_shopify
     brands:
-      nastygal:
+      rebel_chic:
         datasets: [customers, products, orders, order_items]
 
-  # == Magento (Karen Millen & Coast) =============================
+  # == Magento (AtelierLuxe & RivieraMode) =============================
   magento:
     schema: rdl_magento
     brands:
-      karen_millen:
+      atelier_luxe:
         datasets: [customers, products, orders, order_items]
-      coast:
+      riviera_mode:
         datasets: [customers, products, orders, order_items]
 
-  # == Oracle Commerce (Debenhams) ================================
+  # == Oracle Commerce (GrandHeritage) ================================
   oracle_commerce:
     schema: rdl_oracle_commerce
     brands:
-      debenhams:
+      grand_heritage:
         datasets: [customers, products, orders, order_items]
 
   # == Marketing Channels =========================================
   marketing:
     schema: rdl_marketing
     brands:
-      hnb:
+      velvet_lane:
         datasets: [meta_ads, google_ads, tiktok_ads, ga4_sessions, email_campaigns, influencer_posts]
-      hnb_man:
+      velvet_mens:
         datasets: [meta_ads, google_ads, tiktok_ads, ga4_sessions, email_campaigns, influencer_posts]
-      prettylittlething:
+      trend_pulse:
         datasets: [meta_ads, google_ads, tiktok_ads, ga4_sessions, email_campaigns, influencer_posts]
-      nastygal:
+      rebel_chic:
         datasets: [meta_ads, google_ads, tiktok_ads, ga4_sessions, email_campaigns, influencer_posts]
-      karen_millen:
+      atelier_luxe:
         datasets: [meta_ads, google_ads, tiktok_ads, ga4_sessions, email_campaigns, influencer_posts]
-      coast:
+      riviera_mode:
         datasets: [meta_ads, google_ads, tiktok_ads, ga4_sessions, email_campaigns, influencer_posts]
-      debenhams:
+      grand_heritage:
         datasets: [meta_ads, google_ads, tiktok_ads, ga4_sessions, email_campaigns, influencer_posts]

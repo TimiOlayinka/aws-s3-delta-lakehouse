@@ -64,7 +64,7 @@ resource "aws_lightsail_instance" "data_platform" {
 
     # ── Clone repository ──
     cd /home/ec2-user
-    git clone https://github.com/TimiOlayinka/bellosdata-lakehouse.git platform
+    git clone https://github.com/TimiOlayinka/aws-s3-delta-lakehouse.git platform
     chown -R ec2-user:ec2-user platform
 
     # ── Create .env file (credentials injected via deploy script) ──
